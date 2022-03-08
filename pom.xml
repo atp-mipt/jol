@@ -68,7 +68,6 @@ questions.
         <module>jol-cli</module>
         <module>jol-samples</module>
         <module>jol-benchmarks</module>
-        <module>ljv</module>
     </modules>
 
     <prerequisites>
