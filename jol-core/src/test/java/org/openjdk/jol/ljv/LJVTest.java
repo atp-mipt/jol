@@ -16,20 +16,20 @@ import java.util.stream.Stream;
 
 public class LJVTest {
 
-    private static int getVersion() {
-//        Java 8 or lower: 1.6.0_23, 1.7.0, 1.7.0_80, 1.8.0_211
-//        Java 9 or higher: 9.0.1, 11.0.4, 12, 12.0.1
-        String version = System.getProperty("java.version");
-        if (version.startsWith("1.")) {
-            version = version.substring(2, 3);
-        } else {
-            int dot = version.indexOf(".");
-            if (dot != -1) {
-                version = version.substring(0, dot);
-            }
-        }
-        return Integer.parseInt(version);
-    }
+//    private static int getVersion() {
+////        Java 8 or lower: 1.6.0_23, 1.7.0, 1.7.0_80, 1.8.0_211
+////        Java 9 or higher: 9.0.1, 11.0.4, 12, 12.0.1
+//        String version = System.getProperty("java.version");
+//        if (version.startsWith("1.")) {
+//            version = version.substring(2, 3);
+//        } else {
+//            int dot = version.indexOf(".");
+//            if (dot != -1) {
+//                version = version.substring(0, dot);
+//            }
+//        }
+//        return Integer.parseInt(version);
+//    }
 
     @Test
     @EnabledOnJre(JRE.JAVA_11)
@@ -190,6 +190,7 @@ public class LJVTest {
         Approvals.verify(actualGraph);
     }
 
+    @EnabledOnJre(JRE.JAVA_11)
     private String redBlack(Object o) {
         Stream<Field> fieldStream = ClassLayout.parseClass(o.getClass()).fields().stream()
                 .map(FieldLayout::data)
