@@ -46,8 +46,8 @@ questions.
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <compilerVersion>${jol.target}</compilerVersion>
-                    <source>${jol.target}</source>
-                    <target>${jol.target}</target>
+                    <source>8</source>
+                    <target>8</target>
                 </configuration>
             </plugin>
             <plugin>
