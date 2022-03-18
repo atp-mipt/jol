@@ -1,5 +1,8 @@
 package org.openjdk.jol.ljv;
 
+import org.junit.jupiter.api.condition.EnabledOnJre;
+import org.junit.jupiter.api.condition.JRE;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -12,6 +15,7 @@ import java.util.stream.Stream;
  * @author Michael Stummvoll
  * @author Ilya Selivanov
  */
+@EnabledOnJre(JRE.JAVA_11)
 public class HashCodeCollision {
 
     public List<String> genCollisionString(Integer len) {

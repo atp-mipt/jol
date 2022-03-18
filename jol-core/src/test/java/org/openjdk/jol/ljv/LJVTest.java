@@ -1,9 +1,11 @@
 package org.openjdk.jol.ljv;
 
 import org.approvaltests.Approvals;
+import org.junit.Test;
+import org.junit.jupiter.api.condition.EnabledOnJre;
+import org.junit.jupiter.api.condition.JRE;
 import org.openjdk.jol.info.ClassLayout;
 import org.openjdk.jol.info.FieldLayout;
-import org.junit.jupiter.api.Test;
 import org.openjdk.jol.info.FieldData;
 import org.openjdk.jol.util.ObjectUtils;
 
@@ -14,14 +16,31 @@ import java.util.stream.Stream;
 
 public class LJVTest {
 
+    private static int getVersion() {
+//        Java 8 or lower: 1.6.0_23, 1.7.0, 1.7.0_80, 1.8.0_211
+//        Java 9 or higher: 9.0.1, 11.0.4, 12, 12.0.1
+        String version = System.getProperty("java.version");
+        if (version.startsWith("1.")) {
+            version = version.substring(2, 3);
+        } else {
+            int dot = version.indexOf(".");
+            if (dot != -1) {
+                version = version.substring(0, dot);
+            }
+        }
+        return Integer.parseInt(version);
+    }
+
     @Test
-    void stringIsNotAPrimitiveType() {
+    @EnabledOnJre(JRE.JAVA_11)
+    public void stringIsNotAPrimitiveType() {
         String actualGraph = new LJV().drawGraph("Hello");
         Approvals.verify(actualGraph);
     }
 
     @Test
-    void objectArraysHoldReferencesPrimitiveArraysHoldValues() {
+    @EnabledOnJre(JRE.JAVA_11)
+    public void objectArraysHoldReferencesPrimitiveArraysHoldValues() {
         String actual_graph = new LJV()
                 .setTreatAsPrimitive(String.class)
                 .setIgnorePrivateFields(false)
@@ -32,7 +51,8 @@ public class LJVTest {
     }
 
     @Test
-    void assignmentDoesNotCreateANewObject() {
+    @EnabledOnJre(JRE.JAVA_11)
+    public void assignmentDoesNotCreateANewObject() {
         String x = "Hello";
         String y = x;
         String actual_graph = new LJV().drawGraph(new Object[]{x, y});
@@ -40,7 +60,8 @@ public class LJVTest {
     }
 
     @Test
-    void assignmentWithNewCreateANewObject() {
+    @EnabledOnJre(JRE.JAVA_11)
+    public void assignmentWithNewCreateANewObject() {
         String x = "Hello";
         String y = new String(x);
         String actual_graph = new LJV().drawGraph(new Object[]{x, y});
@@ -48,7 +69,8 @@ public class LJVTest {
     }
 
     @Test
-    void stringIntern() {
+    @EnabledOnJre(JRE.JAVA_11)
+    public void stringIntern() {
         String x = "Hello";
         String y = "Hello";
         String actual_graph = new LJV().drawGraph(new Object[]{x, y.intern()});
@@ -56,19 +78,22 @@ public class LJVTest {
     }
 
     @Test
-    void multiDimensionalArrays() {
+    @EnabledOnJre(JRE.JAVA_11)
+    public void multiDimensionalArrays() {
         String actual_graph = new LJV().drawGraph(new int[4][5]);
         Approvals.verify(actual_graph);
     }
 
     @Test
-    void reversedMultiDimensionalArrays() {
+    @EnabledOnJre(JRE.JAVA_11)
+    public void reversedMultiDimensionalArrays() {
         String actual_graph = new LJV().setDirection(Direction.LR).drawGraph(new int[4][5]);
         Approvals.verify(actual_graph);
     }
 
     @Test
-    void cyclicalStructuresClassesWithAndWithoutAToStringAndWithoutContext() {
+    @EnabledOnJre(JRE.JAVA_11)
+    public void cyclicalStructuresClassesWithAndWithoutAToStringAndWithoutContext() {
         Node n1 = new Node("A");
         n1.level = 1;
         AnotherNode n2 = new AnotherNode("B");
@@ -92,7 +117,8 @@ public class LJVTest {
     }
 
     @Test
-    void paulsExample() {
+    @EnabledOnJre(JRE.JAVA_11)
+    public void paulsExample() {
         ArrayList<Object> a = new ArrayList<>();
         a.add(new Person("Albert", Gender.MALE, 35));
         a.add(new Person("Betty", Gender.FEMALE, 20));
@@ -109,7 +135,8 @@ public class LJVTest {
     }
 
     @Test
-    void multipleRoots() {
+    @EnabledOnJre(JRE.JAVA_11)
+    public void multipleRoots() {
         ArrayList<Object> a = new ArrayList<>();
         Person p = new Person("Albert", Gender.MALE, 35);
         Person p2 = new Person("Albert", Gender.MALE, 35);
@@ -118,26 +145,30 @@ public class LJVTest {
     }
 
     @Test
-    void testNull() {
+    @EnabledOnJre(JRE.JAVA_11)
+    public void testNull() {
         String actualGraph = new LJV().drawGraph(null);
         Approvals.verify(actualGraph);
     }
 
     @Test
-    void testMultiNull() {
+    @EnabledOnJre(JRE.JAVA_11)
+    public void testMultiNull() {
         String actualGraph = new LJV().addRoot(null).addRoot(null).drawGraph();
         Approvals.verify(actualGraph);
     }
 
     @Test
-    void testMixedNullsAndNotNulls() {
+    @EnabledOnJre(JRE.JAVA_11)
+    public void testMixedNullsAndNotNulls() {
         String actualGraph = new LJV().addRoot(null)
                 .addRoot(new Object()).addRoot(new Object()).addRoot(null).drawGraph();
         Approvals.verify(actualGraph);
     }
 
     @Test
-    void treeMap() {
+    @EnabledOnJre(JRE.JAVA_11)
+    public void treeMap() {
         TreeMap<String, Integer> map = new TreeMap<>();
 
         map.put("one", 1);
@@ -171,14 +202,15 @@ public class LJVTest {
             return "";
         } else {
             Field colorField = colorFields.iterator().next();
-            boolean b = (boolean)ObjectUtils.value(o, colorField);
+            boolean b = (boolean) ObjectUtils.value(o, colorField);
             return b ? "color=black" : "color=red";
         }
     }
 
 
     @Test
-    void linkedHashMap() {
+    @EnabledOnJre(JRE.JAVA_11)
+    public void linkedHashMap() {
         LinkedHashMap<String, Integer> map = new LinkedHashMap<>();
         map.put("one", 1);
         map.put("two", 2);
@@ -195,7 +227,8 @@ public class LJVTest {
     }
 
     @Test
-    void hashMap() {
+    @EnabledOnJre(JRE.JAVA_11)
+    public void hashMap() {
         HashMap<String, Integer> map = new HashMap<>();
         map.put("one", 1);
         map.put("two", 2);
@@ -211,7 +244,8 @@ public class LJVTest {
     }
 
     @Test
-    void hashMapCollision2() {
+    @EnabledOnJre(JRE.JAVA_11)
+    public void hashMapCollision2() {
         List<String> collisionString = new HashCodeCollision().genCollisionString(3);
         HashMap<String, Integer> map = new HashMap<>();
 
@@ -229,13 +263,15 @@ public class LJVTest {
 
 
     @Test
-    void wrappedObjects() {
+    @EnabledOnJre(JRE.JAVA_11)
+    public void wrappedObjects() {
         String actual_graph = new LJV().drawGraph(new Example());
         Approvals.verify(actual_graph);
     }
 
     @Test
-    void linkedList() {
+    @EnabledOnJre(JRE.JAVA_11)
+    public void linkedList() {
         LinkedList<Integer> linkedList = new LinkedList<>();
         linkedList.add(1);
         linkedList.add(42);
@@ -252,7 +288,8 @@ public class LJVTest {
     }
 
     @Test
-    void testArrayWithHighlighting() {
+    @EnabledOnJre(JRE.JAVA_11)
+    public void testArrayWithHighlighting() {
         LJV ljv = new LJV()
                 .setTreatAsPrimitive(Integer.class)
                 .highlightChangingArrayElements();
@@ -267,7 +304,8 @@ public class LJVTest {
     }
 
     @Test
-    void testNewObjectsHighlighting() {
+    @EnabledOnJre(JRE.JAVA_11)
+    public void testNewObjectsHighlighting() {
         LJV ljv = new LJV()
                 .setTreatAsPrimitive(Integer.class)
                 .setTreatAsPrimitive(String.class)
@@ -285,7 +323,8 @@ public class LJVTest {
     }
 
     @Test
-    void arrayWithFieldAttribute() {
+    @EnabledOnJre(JRE.JAVA_11)
+    public void arrayWithFieldAttribute() {
         String actualGraph = new LJV()
                 .addFieldAttribute("value", "color=red,fontcolor=red")
                 .drawGraph("Hello");
@@ -293,8 +332,9 @@ public class LJVTest {
     }
 
     @Test
-    void twoObjectsLinksToOneArray() {
-        int[] arr = {1,2,3};
+    @EnabledOnJre(JRE.JAVA_11)
+    public void twoObjectsLinksToOneArray() {
+        int[] arr = {1, 2, 3};
         A x = new A(arr);
         B y = new B(arr);
         String actualGraph = new LJV()
@@ -306,9 +346,10 @@ public class LJVTest {
     }
 
     @Test
-    void arrayItemLinksToArray() {
+    @EnabledOnJre(JRE.JAVA_11)
+    public void arrayItemLinksToArray() {
         ArrayItem child = new ArrayItem();
-        ArrayItem[] array = { child };
+        ArrayItem[] array = {child};
         child.prev = array;
         String actualGraph = new LJV().drawGraph(array);
         Approvals.verify(actualGraph);
