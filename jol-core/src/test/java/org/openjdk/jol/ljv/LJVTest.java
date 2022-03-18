@@ -14,7 +14,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class LJVTest {
+class LJVTest {
 
     private static int getVersion() {
 //        Java 8 or lower: 1.6.0_23, 1.7.0, 1.7.0_80, 1.8.0_211
@@ -33,7 +33,7 @@ public class LJVTest {
 
     @Test
     @EnabledOnJre(JRE.JAVA_11)
-    public void stringIsNotAPrimitiveType() {
+    void stringIsNotAPrimitiveType() {
         if(getVersion() != 11){
             return;
         }
@@ -43,7 +43,7 @@ public class LJVTest {
 
     @Test
     @EnabledOnJre(JRE.JAVA_11)
-    public void objectArraysHoldReferencesPrimitiveArraysHoldValues() {
+    void objectArraysHoldReferencesPrimitiveArraysHoldValues() {
         if(getVersion() != 11){
             return;
         }
@@ -58,7 +58,7 @@ public class LJVTest {
 
     @Test
     @EnabledOnJre(JRE.JAVA_11)
-    public void assignmentDoesNotCreateANewObject() {
+    void assignmentDoesNotCreateANewObject() {
         if(getVersion() != 11){
             return;
         }
@@ -70,7 +70,7 @@ public class LJVTest {
 
     @Test
     @EnabledOnJre(JRE.JAVA_11)
-    public void assignmentWithNewCreateANewObject() {
+    void assignmentWithNewCreateANewObject() {
         if(getVersion() != 11){
             return;
         }
@@ -82,7 +82,7 @@ public class LJVTest {
 
     @Test
     @EnabledOnJre(JRE.JAVA_11)
-    public void stringIntern() {
+    void stringIntern() {
         if(getVersion() != 11){
             return;
         }
@@ -94,7 +94,7 @@ public class LJVTest {
 
     @Test
     @EnabledOnJre(JRE.JAVA_11)
-    public void multiDimensionalArrays() {
+    void multiDimensionalArrays() {
         if(getVersion() != 11){
             return;
         }
@@ -104,7 +104,7 @@ public class LJVTest {
 
     @Test
     @EnabledOnJre(JRE.JAVA_11)
-    public void reversedMultiDimensionalArrays() {
+    void reversedMultiDimensionalArrays() {
         if(getVersion() != 11){
             return;
         }
@@ -114,7 +114,7 @@ public class LJVTest {
 
     @Test
     @EnabledOnJre(JRE.JAVA_11)
-    public void cyclicalStructuresClassesWithAndWithoutAToStringAndWithoutContext() {
+    void cyclicalStructuresClassesWithAndWithoutAToStringAndWithoutContext() {
         if(getVersion() != 11){
             return;
         }
@@ -142,7 +142,7 @@ public class LJVTest {
 
     @Test
     @EnabledOnJre(JRE.JAVA_11)
-    public void paulsExample() {
+    void paulsExample() {
         if(getVersion() != 11){
             return;
         }
@@ -163,7 +163,7 @@ public class LJVTest {
 
     @Test
     @EnabledOnJre(JRE.JAVA_11)
-    public void multipleRoots() {
+    void multipleRoots() {
         if(getVersion() != 11){
             return;
         }
@@ -176,7 +176,7 @@ public class LJVTest {
 
     @Test
     @EnabledOnJre(JRE.JAVA_11)
-    public void testNull() {
+    void testNull() {
         if(getVersion() != 11){
             return;
         }
@@ -186,7 +186,7 @@ public class LJVTest {
 
     @Test
     @EnabledOnJre(JRE.JAVA_11)
-    public void testMultiNull() {
+    void testMultiNull() {
         if(getVersion() != 11){
             return;
         }
@@ -196,7 +196,7 @@ public class LJVTest {
 
     @Test
     @EnabledOnJre(JRE.JAVA_11)
-    public void testMixedNullsAndNotNulls() {
+    void testMixedNullsAndNotNulls() {
         if(getVersion() != 11){
             return;
         }
@@ -207,7 +207,7 @@ public class LJVTest {
 
     @Test
     @EnabledOnJre(JRE.JAVA_11)
-    public void treeMap() {
+    void treeMap() {
         if(getVersion() != 11){
             return;
         }
@@ -253,7 +253,7 @@ public class LJVTest {
 
     @Test
     @EnabledOnJre(JRE.JAVA_11)
-    public void linkedHashMap() {
+    void linkedHashMap() {
         if(getVersion() != 11){
             return;
         }
@@ -274,7 +274,7 @@ public class LJVTest {
 
     @Test
     @EnabledOnJre(JRE.JAVA_11)
-    public void hashMap() {
+    void hashMap() {
         if(getVersion() != 11){
             return;
         }
@@ -294,7 +294,7 @@ public class LJVTest {
 
     @Test
     @EnabledOnJre(JRE.JAVA_11)
-    public void hashMapCollision2() {
+    void hashMapCollision2() {
         if(getVersion() != 11){
             return;
         }
@@ -316,7 +316,7 @@ public class LJVTest {
 
     @Test
     @EnabledOnJre(JRE.JAVA_11)
-    public void wrappedObjects() {
+    void wrappedObjects() {
         if(getVersion() != 11){
             return;
         }
@@ -326,7 +326,7 @@ public class LJVTest {
 
     @Test
     @EnabledOnJre(JRE.JAVA_11)
-    public void linkedList() {
+    void linkedList() {
         if(getVersion() != 11){
             return;
         }
@@ -347,7 +347,7 @@ public class LJVTest {
 
     @Test
     @EnabledOnJre(JRE.JAVA_11)
-    public void testArrayWithHighlighting() {
+    void testArrayWithHighlighting() {
         if(getVersion() != 11){
             return;
         }
@@ -366,7 +366,7 @@ public class LJVTest {
 
     @Test
     @EnabledOnJre(JRE.JAVA_11)
-    public void testNewObjectsHighlighting() {
+    void testNewObjectsHighlighting() {
         if(getVersion() != 11){
             return;
         }
@@ -388,7 +388,7 @@ public class LJVTest {
 
     @Test
     @EnabledOnJre(JRE.JAVA_11)
-    public void arrayWithFieldAttribute() {
+    void arrayWithFieldAttribute() {
         if(getVersion() != 11){
             return;
         }
@@ -400,7 +400,7 @@ public class LJVTest {
 
     @Test
     @EnabledOnJre(JRE.JAVA_11)
-    public void twoObjectsLinksToOneArray() {
+    void twoObjectsLinksToOneArray() {
         if(getVersion() != 11){
             return;
         }
@@ -417,7 +417,7 @@ public class LJVTest {
 
     @Test
     @EnabledOnJre(JRE.JAVA_11)
-    public void arrayItemLinksToArray() {
+    void arrayItemLinksToArray() {
         if(getVersion() != 11){
             return;
         }

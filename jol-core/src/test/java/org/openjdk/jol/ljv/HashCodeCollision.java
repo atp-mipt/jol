@@ -3,11 +3,7 @@ package org.openjdk.jol.ljv;
 import org.junit.jupiter.api.condition.EnabledOnJre;
 import org.junit.jupiter.api.condition.JRE;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -26,8 +22,9 @@ public class HashCodeCollision {
 
     public List<String> genCollisionString(Integer len, String alphabet) {
         Map<Integer, List<String>> hashMap = new HashMap<>();
-        List<String> alphabet_list = alphabet.codePoints().mapToObj(c -> String.valueOf((char) c)).collect(Collectors.toUnmodifiableList());
-
+//        List<String> alphabet_list = alphabet.codePoints().mapToObj(c -> String.valueOf((char) c)).collect(Collectors.toUnmodifiableList());
+        List<String> alphabet_list = alphabet.codePoints().mapToObj(c -> String.valueOf((char) c))
+                .collect(Collectors.collectingAndThen(Collectors.toList(), x -> Collections.unmodifiableList(x)));
         Stream<String> permuatation = alphabet_list.stream();
 
         for (int i = 0; i < len - 1; i++) {
