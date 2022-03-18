@@ -2,8 +2,6 @@ package org.openjdk.jol.ljv;
 
 import org.approvaltests.Approvals;
 import org.junit.Test;
-import org.junit.jupiter.api.condition.EnabledOnJre;
-import org.junit.jupiter.api.condition.JRE;
 import org.openjdk.jol.info.ClassLayout;
 import org.openjdk.jol.info.FieldLayout;
 import org.openjdk.jol.info.FieldData;
@@ -32,7 +30,6 @@ class LJVTest {
     }
 
     @Test
-    @EnabledOnJre(JRE.JAVA_11)
     void stringIsNotAPrimitiveType() {
         if(getVersion() != 11){
             return;
@@ -42,7 +39,6 @@ class LJVTest {
     }
 
     @Test
-    @EnabledOnJre(JRE.JAVA_11)
     void objectArraysHoldReferencesPrimitiveArraysHoldValues() {
         if(getVersion() != 11){
             return;
@@ -57,7 +53,6 @@ class LJVTest {
     }
 
     @Test
-    @EnabledOnJre(JRE.JAVA_11)
     void assignmentDoesNotCreateANewObject() {
         if(getVersion() != 11){
             return;
@@ -69,7 +64,6 @@ class LJVTest {
     }
 
     @Test
-    @EnabledOnJre(JRE.JAVA_11)
     void assignmentWithNewCreateANewObject() {
         if(getVersion() != 11){
             return;
@@ -81,7 +75,6 @@ class LJVTest {
     }
 
     @Test
-    @EnabledOnJre(JRE.JAVA_11)
     void stringIntern() {
         if(getVersion() != 11){
             return;
@@ -93,7 +86,6 @@ class LJVTest {
     }
 
     @Test
-    @EnabledOnJre(JRE.JAVA_11)
     void multiDimensionalArrays() {
         if(getVersion() != 11){
             return;
@@ -103,7 +95,6 @@ class LJVTest {
     }
 
     @Test
-    @EnabledOnJre(JRE.JAVA_11)
     void reversedMultiDimensionalArrays() {
         if(getVersion() != 11){
             return;
@@ -113,7 +104,6 @@ class LJVTest {
     }
 
     @Test
-    @EnabledOnJre(JRE.JAVA_11)
     void cyclicalStructuresClassesWithAndWithoutAToStringAndWithoutContext() {
         if(getVersion() != 11){
             return;
@@ -141,7 +131,6 @@ class LJVTest {
     }
 
     @Test
-    @EnabledOnJre(JRE.JAVA_11)
     void paulsExample() {
         if(getVersion() != 11){
             return;
@@ -162,7 +151,6 @@ class LJVTest {
     }
 
     @Test
-    @EnabledOnJre(JRE.JAVA_11)
     void multipleRoots() {
         if(getVersion() != 11){
             return;
@@ -175,7 +163,6 @@ class LJVTest {
     }
 
     @Test
-    @EnabledOnJre(JRE.JAVA_11)
     void testNull() {
         if(getVersion() != 11){
             return;
@@ -185,7 +172,6 @@ class LJVTest {
     }
 
     @Test
-    @EnabledOnJre(JRE.JAVA_11)
     void testMultiNull() {
         if(getVersion() != 11){
             return;
@@ -195,7 +181,6 @@ class LJVTest {
     }
 
     @Test
-    @EnabledOnJre(JRE.JAVA_11)
     void testMixedNullsAndNotNulls() {
         if(getVersion() != 11){
             return;
@@ -206,7 +191,6 @@ class LJVTest {
     }
 
     @Test
-    @EnabledOnJre(JRE.JAVA_11)
     void treeMap() {
         if(getVersion() != 11){
             return;
@@ -232,7 +216,6 @@ class LJVTest {
         Approvals.verify(actualGraph);
     }
 
-    @EnabledOnJre(JRE.JAVA_11)
     private String redBlack(Object o) {
         Stream<Field> fieldStream = ClassLayout.parseClass(o.getClass()).fields().stream()
                 .map(FieldLayout::data)
@@ -252,7 +235,6 @@ class LJVTest {
 
 
     @Test
-    @EnabledOnJre(JRE.JAVA_11)
     void linkedHashMap() {
         if(getVersion() != 11){
             return;
@@ -273,7 +255,6 @@ class LJVTest {
     }
 
     @Test
-    @EnabledOnJre(JRE.JAVA_11)
     void hashMap() {
         if(getVersion() != 11){
             return;
@@ -293,7 +274,6 @@ class LJVTest {
     }
 
     @Test
-    @EnabledOnJre(JRE.JAVA_11)
     void hashMapCollision2() {
         if(getVersion() != 11){
             return;
@@ -315,7 +295,6 @@ class LJVTest {
 
 
     @Test
-    @EnabledOnJre(JRE.JAVA_11)
     void wrappedObjects() {
         if(getVersion() != 11){
             return;
@@ -325,7 +304,6 @@ class LJVTest {
     }
 
     @Test
-    @EnabledOnJre(JRE.JAVA_11)
     void linkedList() {
         if(getVersion() != 11){
             return;
@@ -346,7 +324,6 @@ class LJVTest {
     }
 
     @Test
-    @EnabledOnJre(JRE.JAVA_11)
     void testArrayWithHighlighting() {
         if(getVersion() != 11){
             return;
@@ -365,7 +342,6 @@ class LJVTest {
     }
 
     @Test
-    @EnabledOnJre(JRE.JAVA_11)
     void testNewObjectsHighlighting() {
         if(getVersion() != 11){
             return;
@@ -387,7 +363,6 @@ class LJVTest {
     }
 
     @Test
-    @EnabledOnJre(JRE.JAVA_11)
     void arrayWithFieldAttribute() {
         if(getVersion() != 11){
             return;
@@ -399,7 +374,6 @@ class LJVTest {
     }
 
     @Test
-    @EnabledOnJre(JRE.JAVA_11)
     void twoObjectsLinksToOneArray() {
         if(getVersion() != 11){
             return;
@@ -416,7 +390,6 @@ class LJVTest {
     }
 
     @Test
-    @EnabledOnJre(JRE.JAVA_11)
     void arrayItemLinksToArray() {
         if(getVersion() != 11){
             return;

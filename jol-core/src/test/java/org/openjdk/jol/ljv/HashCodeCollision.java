@@ -1,8 +1,5 @@
 package org.openjdk.jol.ljv;
 
-import org.junit.jupiter.api.condition.EnabledOnJre;
-import org.junit.jupiter.api.condition.JRE;
-
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -11,7 +8,6 @@ import java.util.stream.Stream;
  * @author Michael Stummvoll
  * @author Ilya Selivanov
  */
-@EnabledOnJre(JRE.JAVA_11)
 public class HashCodeCollision {
 
     public List<String> genCollisionString(Integer len) {
@@ -25,20 +21,20 @@ public class HashCodeCollision {
 //        List<String> alphabet_list = alphabet.codePoints().mapToObj(c -> String.valueOf((char) c)).collect(Collectors.toUnmodifiableList());
         List<String> alphabet_list = alphabet.codePoints().mapToObj(c -> String.valueOf((char) c))
                 .collect(Collectors.collectingAndThen(Collectors.toList(), x -> Collections.unmodifiableList(x)));
-        Stream<String> permuatation = alphabet_list.stream();
+        Stream<String> permutation = alphabet_list.stream();
 
         for (int i = 0; i < len - 1; i++) {
-            permuatation = permuatation
-                    .flatMap(permuatatin_el -> alphabet_list.stream()
-                            .map(alphabet_x -> permuatatin_el + alphabet_x));
+            permutation = permutation
+                    .flatMap(permutation_el -> alphabet_list.stream()
+                            .map(alphabet_x -> permutation_el + alphabet_x));
         }
 
-        permuatation.forEach(permuatation_el -> {
-            Integer hash = permuatation_el.hashCode();
+        permutation.forEach(permutation_el -> {
+            Integer hash = permutation_el.hashCode();
             if (!hashMap.containsKey(hash)) {
                 hashMap.put(hash, new ArrayList<>());
             }
-            hashMap.get(hash).add(permuatation_el);
+            hashMap.get(hash).add(permutation_el);
         });
 
 
