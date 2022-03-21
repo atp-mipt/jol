@@ -2,6 +2,7 @@ package org.openjdk.jol.ljv;
 
 import org.approvaltests.Approvals;
 import org.junit.Test;
+import org.junit.jupiter.api.Assumptions;
 import org.openjdk.jol.info.ClassLayout;
 import org.openjdk.jol.info.FieldLayout;
 import org.openjdk.jol.info.FieldData;
@@ -12,37 +13,18 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-class LJVTest {
-
-    private static int getVersion() {
-//        Java 8 or lower: 1.6.0_23, 1.7.0, 1.7.0_80, 1.8.0_211
-//        Java 9 or higher: 9.0.1, 11.0.4, 12, 12.0.1
-        String version = System.getProperty("java.version");
-        if (version.startsWith("1.")) {
-            version = version.substring(2, 3);
-        } else {
-            int dot = version.indexOf(".");
-            if (dot != -1) {
-                version = version.substring(0, dot);
-            }
-        }
-        return Integer.parseInt(version);
-    }
+class LJVTest implements VersionGuardedTest {
 
     @Test
     void stringIsNotAPrimitiveType() {
-        if(getVersion() != 11){
-            return;
-        }
+        Assumptions.assumeTrue(is11());
         String actualGraph = new LJV().drawGraph("Hello");
         Approvals.verify(actualGraph);
     }
 
     @Test
     void objectArraysHoldReferencesPrimitiveArraysHoldValues() {
-        if(getVersion() != 11){
-            return;
-        }
+        Assumptions.assumeTrue(is11());
         String actual_graph = new LJV()
                 .setTreatAsPrimitive(String.class)
                 .setIgnorePrivateFields(false)
@@ -54,9 +36,7 @@ class LJVTest {
 
     @Test
     void assignmentDoesNotCreateANewObject() {
-        if(getVersion() != 11){
-            return;
-        }
+        Assumptions.assumeTrue(is11());
         String x = "Hello";
         String y = x;
         String actual_graph = new LJV().drawGraph(new Object[]{x, y});
@@ -65,9 +45,7 @@ class LJVTest {
 
     @Test
     void assignmentWithNewCreateANewObject() {
-        if(getVersion() != 11){
-            return;
-        }
+        Assumptions.assumeTrue(is11());
         String x = "Hello";
         String y = new String(x);
         String actual_graph = new LJV().drawGraph(new Object[]{x, y});
@@ -76,9 +54,7 @@ class LJVTest {
 
     @Test
     void stringIntern() {
-        if(getVersion() != 11){
-            return;
-        }
+        Assumptions.assumeTrue(is11());
         String x = "Hello";
         String y = "Hello";
         String actual_graph = new LJV().drawGraph(new Object[]{x, y.intern()});
@@ -87,27 +63,21 @@ class LJVTest {
 
     @Test
     void multiDimensionalArrays() {
-        if(getVersion() != 11){
-            return;
-        }
+        Assumptions.assumeTrue(is11());
         String actual_graph = new LJV().drawGraph(new int[4][5]);
         Approvals.verify(actual_graph);
     }
 
     @Test
     void reversedMultiDimensionalArrays() {
-        if(getVersion() != 11){
-            return;
-        }
+        Assumptions.assumeTrue(is11());
         String actual_graph = new LJV().setDirection(Direction.LR).drawGraph(new int[4][5]);
         Approvals.verify(actual_graph);
     }
 
     @Test
     void cyclicalStructuresClassesWithAndWithoutAToStringAndWithoutContext() {
-        if(getVersion() != 11){
-            return;
-        }
+        Assumptions.assumeTrue(is11());
         Node n1 = new Node("A");
         n1.level = 1;
         AnotherNode n2 = new AnotherNode("B");
@@ -132,9 +102,7 @@ class LJVTest {
 
     @Test
     void paulsExample() {
-        if(getVersion() != 11){
-            return;
-        }
+        Assumptions.assumeTrue(is11());
         ArrayList<Object> a = new ArrayList<>();
         a.add(new Person("Albert", Gender.MALE, 35));
         a.add(new Person("Betty", Gender.FEMALE, 20));
@@ -152,9 +120,7 @@ class LJVTest {
 
     @Test
     void multipleRoots() {
-        if(getVersion() != 11){
-            return;
-        }
+        Assumptions.assumeTrue(is11());
         ArrayList<Object> a = new ArrayList<>();
         Person p = new Person("Albert", Gender.MALE, 35);
         Person p2 = new Person("Albert", Gender.MALE, 35);
@@ -164,27 +130,21 @@ class LJVTest {
 
     @Test
     void testNull() {
-        if(getVersion() != 11){
-            return;
-        }
+        Assumptions.assumeTrue(is11());
         String actualGraph = new LJV().drawGraph(null);
         Approvals.verify(actualGraph);
     }
 
     @Test
     void testMultiNull() {
-        if(getVersion() != 11){
-            return;
-        }
+        Assumptions.assumeTrue(is11());
         String actualGraph = new LJV().addRoot(null).addRoot(null).drawGraph();
         Approvals.verify(actualGraph);
     }
 
     @Test
     void testMixedNullsAndNotNulls() {
-        if(getVersion() != 11){
-            return;
-        }
+        Assumptions.assumeTrue(is11());
         String actualGraph = new LJV().addRoot(null)
                 .addRoot(new Object()).addRoot(new Object()).addRoot(null).drawGraph();
         Approvals.verify(actualGraph);
@@ -192,9 +152,7 @@ class LJVTest {
 
     @Test
     void treeMap() {
-        if(getVersion() != 11){
-            return;
-        }
+        Assumptions.assumeTrue(is11());
         TreeMap<String, Integer> map = new TreeMap<>();
 
         map.put("one", 1);
@@ -236,9 +194,7 @@ class LJVTest {
 
     @Test
     void linkedHashMap() {
-        if(getVersion() != 11){
-            return;
-        }
+        Assumptions.assumeTrue(is11());
         LinkedHashMap<String, Integer> map = new LinkedHashMap<>();
         map.put("one", 1);
         map.put("two", 2);
@@ -256,9 +212,7 @@ class LJVTest {
 
     @Test
     void hashMap() {
-        if(getVersion() != 11){
-            return;
-        }
+        Assumptions.assumeTrue(is11());
         HashMap<String, Integer> map = new HashMap<>();
         map.put("one", 1);
         map.put("two", 2);
@@ -275,9 +229,7 @@ class LJVTest {
 
     @Test
     void hashMapCollision2() {
-        if(getVersion() != 11){
-            return;
-        }
+        Assumptions.assumeTrue(is11());
         List<String> collisionString = new HashCodeCollision().genCollisionString(3);
         HashMap<String, Integer> map = new HashMap<>();
 
@@ -296,18 +248,14 @@ class LJVTest {
 
     @Test
     void wrappedObjects() {
-        if(getVersion() != 11){
-            return;
-        }
+        Assumptions.assumeTrue(is11());
         String actual_graph = new LJV().drawGraph(new Example());
         Approvals.verify(actual_graph);
     }
 
     @Test
     void linkedList() {
-        if(getVersion() != 11){
-            return;
-        }
+        Assumptions.assumeTrue(is11());
         LinkedList<Integer> linkedList = new LinkedList<>();
         linkedList.add(1);
         linkedList.add(42);
@@ -325,9 +273,7 @@ class LJVTest {
 
     @Test
     void testArrayWithHighlighting() {
-        if(getVersion() != 11){
-            return;
-        }
+        Assumptions.assumeTrue(is11());
         LJV ljv = new LJV()
                 .setTreatAsPrimitive(Integer.class)
                 .highlightChangingArrayElements();
@@ -343,9 +289,7 @@ class LJVTest {
 
     @Test
     void testNewObjectsHighlighting() {
-        if(getVersion() != 11){
-            return;
-        }
+        Assumptions.assumeTrue(is11());
         LJV ljv = new LJV()
                 .setTreatAsPrimitive(Integer.class)
                 .setTreatAsPrimitive(String.class)
@@ -364,9 +308,7 @@ class LJVTest {
 
     @Test
     void arrayWithFieldAttribute() {
-        if(getVersion() != 11){
-            return;
-        }
+        Assumptions.assumeTrue(is11());
         String actualGraph = new LJV()
                 .addFieldAttribute("value", "color=red,fontcolor=red")
                 .drawGraph("Hello");
@@ -375,9 +317,7 @@ class LJVTest {
 
     @Test
     void twoObjectsLinksToOneArray() {
-        if(getVersion() != 11){
-            return;
-        }
+        Assumptions.assumeTrue(is11());
         int[] arr = {1, 2, 3};
         A x = new A(arr);
         B y = new B(arr);
@@ -391,9 +331,7 @@ class LJVTest {
 
     @Test
     void arrayItemLinksToArray() {
-        if(getVersion() != 11){
-            return;
-        }
+        Assumptions.assumeTrue(is11());
         ArrayItem child = new ArrayItem();
         ArrayItem[] array = {child};
         child.prev = array;
