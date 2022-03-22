@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.junit.jupiter.api.Assumptions;
 import org.openjdk.jol.ljv.VersionGuardedTest;
 
+import static org.junit.Assume.assumeTrue;
 import static org.openjdk.jol.ljv.provider.impl.ChangingArrayElementHighlighter.HIGHLIGHT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -13,7 +14,7 @@ class ChangingArrayElementHighlighterTest implements VersionGuardedTest {
 
     @Test
     public void checksChangedElements() {
-        Assumptions.assumeTrue(is11());
+        assumeTrue(is11());
         int[] arr = new int[]{1, 2, 3};
         for (int i = 0; i < arr.length; i++) {
             assertEquals("", provider.getAttribute(arr, i));
