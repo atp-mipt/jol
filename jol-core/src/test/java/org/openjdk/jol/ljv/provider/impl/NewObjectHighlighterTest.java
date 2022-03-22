@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.openjdk.jol.ljv.provider.impl.NewObjectHighlighter.HIGHLIGHT;
 
-class NewObjectHighlighterTest {
+public class NewObjectHighlighterTest {
     @Test
     void newObjectsAreHighlighted() {
         Object o1 = new Object();

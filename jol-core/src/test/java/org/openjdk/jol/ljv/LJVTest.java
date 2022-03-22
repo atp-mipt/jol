@@ -1,7 +1,7 @@
 package org.openjdk.jol.ljv;
 
-import org.approvaltests.Approvals;
 import org.junit.Test;
+import org.approvaltests.Approvals;
 import org.junit.jupiter.api.Assumptions;
 import org.openjdk.jol.info.ClassLayout;
 import org.openjdk.jol.info.FieldLayout;
@@ -13,8 +13,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-class LJVTest implements VersionGuardedTest {
 
+public class LJVTest  implements VersionGuardedTest {
     @Test
     void stringIsNotAPrimitiveType() {
 //        Assumptions.assumeTrue(is11());
