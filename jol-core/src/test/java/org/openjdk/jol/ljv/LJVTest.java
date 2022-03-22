@@ -16,14 +16,14 @@ import java.util.stream.Stream;
 
 public class LJVTest  implements VersionGuardedTest {
     @Test
-    void stringIsNotAPrimitiveType() {
+    public void stringIsNotAPrimitiveType() {
         Assumptions.assumeTrue(is11());
         String actualGraph = new LJV().drawGraph("Hello");
         Approvals.verify(actualGraph);
     }
 
     @Test
-    void objectArraysHoldReferencesPrimitiveArraysHoldValues() {
+    public void objectArraysHoldReferencesPrimitiveArraysHoldValues() {
         Assumptions.assumeTrue(is11());
         String actual_graph = new LJV()
                 .setTreatAsPrimitive(String.class)
@@ -35,7 +35,7 @@ public class LJVTest  implements VersionGuardedTest {
     }
 
     @Test
-    void assignmentDoesNotCreateANewObject() {
+    public void assignmentDoesNotCreateANewObject() {
         Assumptions.assumeTrue(is11());
         String x = "Hello";
         String y = x;
@@ -44,7 +44,7 @@ public class LJVTest  implements VersionGuardedTest {
     }
 
     @Test
-    void assignmentWithNewCreateANewObject() {
+    public void assignmentWithNewCreateANewObject() {
         Assumptions.assumeTrue(is11());
         String x = "Hello";
         String y = new String(x);
@@ -53,7 +53,7 @@ public class LJVTest  implements VersionGuardedTest {
     }
 
     @Test
-    void stringIntern() {
+    public void stringIntern() {
         Assumptions.assumeTrue(is11());
         String x = "Hello";
         String y = "Hello";
@@ -62,21 +62,21 @@ public class LJVTest  implements VersionGuardedTest {
     }
 
     @Test
-    void multiDimensionalArrays() {
+    public void multiDimensionalArrays() {
         Assumptions.assumeTrue(is11());
         String actual_graph = new LJV().drawGraph(new int[4][5]);
         Approvals.verify(actual_graph);
     }
 
     @Test
-    void reversedMultiDimensionalArrays() {
+    public void reversedMultiDimensionalArrays() {
         Assumptions.assumeTrue(is11());
         String actual_graph = new LJV().setDirection(Direction.LR).drawGraph(new int[4][5]);
         Approvals.verify(actual_graph);
     }
 
     @Test
-    void cyclicalStructuresClassesWithAndWithoutAToStringAndWithoutContext() {
+    public void cyclicalStructuresClassesWithAndWithoutAToStringAndWithoutContext() {
         Assumptions.assumeTrue(is11());
         Node n1 = new Node("A");
         n1.level = 1;
@@ -101,7 +101,7 @@ public class LJVTest  implements VersionGuardedTest {
     }
 
     @Test
-    void paulsExample() {
+    public void paulsExample() {
         Assumptions.assumeTrue(is11());
         ArrayList<Object> a = new ArrayList<>();
         a.add(new Person("Albert", Gender.MALE, 35));
@@ -119,7 +119,7 @@ public class LJVTest  implements VersionGuardedTest {
     }
 
     @Test
-    void multipleRoots() {
+    public void multipleRoots() {
         Assumptions.assumeTrue(is11());
         ArrayList<Object> a = new ArrayList<>();
         Person p = new Person("Albert", Gender.MALE, 35);
@@ -129,21 +129,21 @@ public class LJVTest  implements VersionGuardedTest {
     }
 
     @Test
-    void testNull() {
+    public void testNull() {
         Assumptions.assumeTrue(is11());
         String actualGraph = new LJV().drawGraph(null);
         Approvals.verify(actualGraph);
     }
 
     @Test
-    void testMultiNull() {
+    public void testMultiNull() {
         Assumptions.assumeTrue(is11());
         String actualGraph = new LJV().addRoot(null).addRoot(null).drawGraph();
         Approvals.verify(actualGraph);
     }
 
     @Test
-    void testMixedNullsAndNotNulls() {
+    public void testMixedNullsAndNotNulls() {
         Assumptions.assumeTrue(is11());
         String actualGraph = new LJV().addRoot(null)
                 .addRoot(new Object()).addRoot(new Object()).addRoot(null).drawGraph();
@@ -151,7 +151,7 @@ public class LJVTest  implements VersionGuardedTest {
     }
 
     @Test
-    void treeMap() {
+    public void treeMap() {
         Assumptions.assumeTrue(is11());
         TreeMap<String, Integer> map = new TreeMap<>();
 
@@ -193,7 +193,7 @@ public class LJVTest  implements VersionGuardedTest {
 
 
     @Test
-    void linkedHashMap() {
+    public void linkedHashMap() {
         Assumptions.assumeTrue(is11());
         LinkedHashMap<String, Integer> map = new LinkedHashMap<>();
         map.put("one", 1);
@@ -211,7 +211,7 @@ public class LJVTest  implements VersionGuardedTest {
     }
 
     @Test
-    void hashMap() {
+    public void hashMap() {
         Assumptions.assumeTrue(is11());
         HashMap<String, Integer> map = new HashMap<>();
         map.put("one", 1);
@@ -228,7 +228,7 @@ public class LJVTest  implements VersionGuardedTest {
     }
 
     @Test
-    void hashMapCollision2() {
+    public void hashMapCollision2() {
         Assumptions.assumeTrue(is11());
         List<String> collisionString = new HashCodeCollision().genCollisionString(3);
         HashMap<String, Integer> map = new HashMap<>();
@@ -247,14 +247,14 @@ public class LJVTest  implements VersionGuardedTest {
 
 
     @Test
-    void wrappedObjects() {
+    public void wrappedObjects() {
         Assumptions.assumeTrue(is11());
         String actual_graph = new LJV().drawGraph(new Example());
         Approvals.verify(actual_graph);
     }
 
     @Test
-    void linkedList() {
+    public void linkedList() {
         Assumptions.assumeTrue(is11());
         LinkedList<Integer> linkedList = new LinkedList<>();
         linkedList.add(1);
@@ -272,7 +272,7 @@ public class LJVTest  implements VersionGuardedTest {
     }
 
     @Test
-    void testArrayWithHighlighting() {
+    public void testArrayWithHighlighting() {
         Assumptions.assumeTrue(is11());
         LJV ljv = new LJV()
                 .setTreatAsPrimitive(Integer.class)
@@ -288,7 +288,7 @@ public class LJVTest  implements VersionGuardedTest {
     }
 
     @Test
-    void testNewObjectsHighlighting() {
+    public void testNewObjectsHighlighting() {
         Assumptions.assumeTrue(is11());
         LJV ljv = new LJV()
                 .setTreatAsPrimitive(Integer.class)
@@ -307,7 +307,7 @@ public class LJVTest  implements VersionGuardedTest {
     }
 
     @Test
-    void arrayWithFieldAttribute() {
+    public void arrayWithFieldAttribute() {
         Assumptions.assumeTrue(is11());
         String actualGraph = new LJV()
                 .addFieldAttribute("value", "color=red,fontcolor=red")
@@ -316,7 +316,7 @@ public class LJVTest  implements VersionGuardedTest {
     }
 
     @Test
-    void twoObjectsLinksToOneArray() {
+    public void twoObjectsLinksToOneArray() {
         Assumptions.assumeTrue(is11());
         int[] arr = {1, 2, 3};
         A x = new A(arr);
@@ -330,7 +330,7 @@ public class LJVTest  implements VersionGuardedTest {
     }
 
     @Test
-    void arrayItemLinksToArray() {
+    public void arrayItemLinksToArray() {
         Assumptions.assumeTrue(is11());
         ArrayItem child = new ArrayItem();
         ArrayItem[] array = {child};

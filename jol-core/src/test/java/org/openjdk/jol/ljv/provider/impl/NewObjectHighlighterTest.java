@@ -9,7 +9,7 @@ import static org.openjdk.jol.ljv.provider.impl.NewObjectHighlighter.HIGHLIGHT;
 
 public class NewObjectHighlighterTest implements VersionGuardedTest {
     @Test
-    void newObjectsAreHighlighted() {
+    public void newObjectsAreHighlighted() {
         Assumptions.assumeTrue(is11());
         Object o1 = new Object();
         Object o2 = new Object();

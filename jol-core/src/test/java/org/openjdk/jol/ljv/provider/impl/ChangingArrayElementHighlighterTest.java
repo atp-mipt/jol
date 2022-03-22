@@ -12,7 +12,7 @@ class ChangingArrayElementHighlighterTest implements VersionGuardedTest {
     ChangingArrayElementHighlighter provider = new ChangingArrayElementHighlighter();
 
     @Test
-    void checksChangedElements() {
+    public void checksChangedElements() {
         Assumptions.assumeTrue(is11());
         int[] arr = new int[]{1, 2, 3};
         for (int i = 0; i < arr.length; i++) {
