@@ -1,9 +1,9 @@
 package org.openjdk.jol.ljv;
 
-public interface VersionGuardedTest {
+public class VersionGuardedTest {
     int VERSION = getVersion();
 
-    default boolean is11() {
+    public boolean is11() {
         return VERSION == 11;
     }
 

@@ -32,8 +32,9 @@ import java.lang.reflect.Field;
 public interface FieldAttributesProvider {
     /**
      * Get map of attributes.
+     *
      * @param field Field information
-     * @param val Field value
+     * @param val   Field value
      * @return Map of attribute values
      */
     String getAttribute(Field field, Object val);

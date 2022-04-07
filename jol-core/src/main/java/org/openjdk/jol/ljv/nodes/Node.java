@@ -55,7 +55,7 @@ public abstract class Node {
         this.attributes = attributes;
     }
 
-    public String getAttributes(){
+    public String getAttributes() {
         return attributes;
     }
 

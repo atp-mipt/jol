@@ -76,13 +76,13 @@ public class GraphvizVisualization implements Visualization {
     @Override
     public void visitArrayBegin(ArrayNode arrayNode) {
         out.append("\t")
-           .append(dotName(arrayNode.getValue()))
-           .append("[label=<\n");
+                .append(dotName(arrayNode.getValue()))
+                .append("[label=<\n");
 
         if (arrayNode.areValuesPrimitive()) {
-           out.append("\t\t<table border='0' cellborder='1' cellspacing='0'>\n");
+            out.append("\t\t<table border='0' cellborder='1' cellspacing='0'>\n");
         } else {
-           out.append("\t\t<table border='0' cellborder='1' cellspacing='0' cellpadding='9'>\n");
+            out.append("\t\t<table border='0' cellborder='1' cellspacing='0' cellpadding='9'>\n");
         }
 
         out.append("\t\t\t<tr>\n");
@@ -95,7 +95,7 @@ public class GraphvizVisualization implements Visualization {
             out.append(" port=\"f").append(elementIndex).append("\"");
         }
         out.append(ljv.getArrayElementAttributes(arrayNode.getValue(), elementIndex))
-           .append(">");
+                .append(">");
 
         // If array element is treated as primitive - than filling array cell with value
         // Otherwise cell will be empty, but arrow-connected with object it is containing
@@ -109,14 +109,14 @@ public class GraphvizVisualization implements Visualization {
     @Override
     public void visitArrayElementObjectConnection(Object array, int elementIndex, Object obj) {
         out.append("\t")
-           .append(dotName(array))
-           .append(":f")
-           .append(elementIndex)
-           .append(" -> ")
-           .append(dotName(obj))
-           .append("[label=\"")
-           .append(elementIndex)
-           .append("\",fontsize=12];\n");
+                .append(dotName(array))
+                .append(":f")
+                .append(elementIndex)
+                .append(" -> ")
+                .append(dotName(obj))
+                .append("[label=\"")
+                .append(elementIndex)
+                .append("\",fontsize=12];\n");
     }
 
 
@@ -128,23 +128,23 @@ public class GraphvizVisualization implements Visualization {
     @Override
     public void visitObjectBegin(ObjectNode objectNode) {
         out.append("\t")
-           .append(dotName(objectNode.getValue()))
-           .append("[label=<\n")
-           .append("\t\t<table border='0' cellborder='1' cellspacing='0'>\n");
+                .append(dotName(objectNode.getValue()))
+                .append("[label=<\n")
+                .append("\t\t<table border='0' cellborder='1' cellspacing='0'>\n");
 
         // Adding header row with object class name
         out.append("\t\t\t<tr>\n");
         if (objectNode.getPrimitiveFieldsNum() > 0) {
             out.append("\t\t\t\t<td rowspan='")
-               .append(objectNode.getPrimitiveFieldsNum() + 1)
-               .append("'>");
+                    .append(objectNode.getPrimitiveFieldsNum() + 1)
+                    .append("'>");
         } else {
             out.append("\t\t\t\t<td>");
         }
         out.append(objectNode.getClassName())
-           .append("</td>\n\t\t\t</tr>\n");
+                .append("</td>\n\t\t\t</tr>\n");
     }
-    
+
     @Override
     public void visitObjectPrimitiveField(String fieldName, String fieldValueStr) {
         out.append("\t\t\t<tr>\n\t\t\t\t<td>");
@@ -158,14 +158,14 @@ public class GraphvizVisualization implements Visualization {
     @Override
     public void visitObjectFieldRelationWithNonPrimitiveObject(Object obj, Node childNode, String ljvFieldAttributes) {
         out.append("\t")
-           .append(dotName(obj))
-           .append(" -> ")
-           .append(dotName(childNode.getValue()))
-           .append("[label=\"")
-           .append(childNode.getName())
-           .append("\",fontsize=12")
-           .append(ljvFieldAttributes.isEmpty() ? "" : "," + ljvFieldAttributes)
-           .append("];\n");
+                .append(dotName(obj))
+                .append(" -> ")
+                .append(dotName(childNode.getValue()))
+                .append("[label=\"")
+                .append(childNode.getName())
+                .append("\",fontsize=12")
+                .append(ljvFieldAttributes.isEmpty() ? "" : "," + ljvFieldAttributes)
+                .append("];\n");
     }
 
     @Override
@@ -179,7 +179,17 @@ public class GraphvizVisualization implements Visualization {
         out.append("];\n");
     }
 
+    private String compIfAbsent(Object obj) {
+        String value = alreadyDrawnObjectsIds.get(obj);
+        if (value == null) {
+            String newValue = "n" + (alreadyDrawnObjectsIds.size() + 1);
+            alreadyDrawnObjectsIds.put(obj, newValue);
+            value = newValue;
+        }
+        return value;
+    }
+
     private String dotName(Object obj) {
-        return obj == null ? "NULL" : alreadyDrawnObjectsIds.computeIfAbsent(obj, s -> "n" + (alreadyDrawnObjectsIds.size() + 1));
+        return obj == null ? "NULL" : compIfAbsent(obj);
     }
 }

@@ -37,8 +37,6 @@ import org.openjdk.jol.info.FieldData;
 
 import java.lang.reflect.*;
 import java.util.*;
-import java.util.function.Predicate;
-import java.util.stream.Stream;
 
 public class IntrospectionWithReflectionAPI implements Introspection {
     private final IdentityHashMap<Object, ObjectNode> alreadyVisitedObjects = new IdentityHashMap<>();
@@ -185,21 +183,19 @@ public class IntrospectionWithReflectionAPI implements Introspection {
         Class<?> cls = obj.getClass();
 
         SortedSet<FieldLayout> fieldLayouts = ClassLayout.parseClass(cls).fields();
-
-        Stream<Field> fieldStream = fieldLayouts.stream()
-                .map(FieldLayout::data).map(FieldData::refField).filter(getObjFieldsIgnoreNullValuedPredicate(obj));
-
-        return fieldStream.toArray(Field[]::new);
-    }
-
-    private Predicate<Field> getObjFieldsIgnoreNullValuedPredicate(Object obj) {
-        return (Field f) -> {
+        ArrayList<Field> res = new ArrayList<>();
+        for (FieldLayout layout : fieldLayouts) {
+            Field f = layout.data().refField();
             if (ljv.isIgnoreNullValuedFields()) {
-                return ObjectUtils.value(obj, f) != null;
+                if (ObjectUtils.value(obj, f) == null) {
+                    continue;
+                }
             }
-            return true;
-        };
+            res.add(f);
+        }
+        return res.toArray(new Field[0]);
     }
+
 
     @Override
     public boolean canTreatClassAsPrimitive(Class<?> cz) {

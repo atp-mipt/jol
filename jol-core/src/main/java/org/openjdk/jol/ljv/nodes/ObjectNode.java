@@ -72,14 +72,14 @@ public class ObjectNode extends Node {
     public void visit(Visualization v) {
         v.visitObjectBegin(this);
         // First processing only primitive fields
-        for (Node node: children) {
+        for (Node node : children) {
             if (node instanceof PrimitiveNode) {
                 node.visit(v);
             }
         }
         v.visitObjectEnd(getValue());
         // Next, processing non-primitive objects and making relations with them
-        for (Node node: children) {
+        for (Node node : children) {
             if (node instanceof PrimitiveNode) {
                 continue;
             }

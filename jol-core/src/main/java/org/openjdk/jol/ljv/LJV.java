@@ -53,7 +53,6 @@ import org.openjdk.jol.ljv.provider.impl.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Lightweight Java Visualizer.
@@ -133,10 +132,17 @@ public final class LJV {
     }
 
     public String getObjectAttributes(Object o) {
-        return objectAttributesProviders.stream()
-                .map(p -> p.getAttribute(o))
-                .filter(s -> !(s == null || s.isEmpty()))
-                .collect(Collectors.joining(","));
+        StringBuilder sb = new StringBuilder();
+        String loopDelimit = "";
+        for (ObjectAttributesProvider elem : objectAttributesProviders) {
+            String tmp = elem.getAttribute(o);
+            if ((tmp != null) && !tmp.isEmpty()) {
+                sb.append(loopDelimit);
+                sb.append(tmp);
+                loopDelimit = ",";
+            }
+        }
+        return sb.toString();
     }
 
     /**
@@ -160,10 +166,17 @@ public final class LJV {
     }
 
     public String getFieldAttributes(Field field, Object value) {
-        return fieldAttributesProviders.stream()
-                .map(p -> p.getAttribute(field, value))
-                .filter(s -> !(s == null || s.isEmpty()))
-                .collect(Collectors.joining(","));
+        StringBuilder sb = new StringBuilder();
+        String loopDelimit = "";
+        for (FieldAttributesProvider elem : fieldAttributesProviders) {
+            String tmp = elem.getAttribute(field, value);
+            if ((tmp != null) && !tmp.isEmpty()) {
+                sb.append(loopDelimit);
+                sb.append(tmp);
+                loopDelimit = ",";
+            }
+        }
+        return sb.toString();
     }
 
     /**
@@ -270,10 +283,17 @@ public final class LJV {
     }
 
     public String getArrayElementAttributes(Object array, int index) {
-        String result = arrayElementAttributeProviders.stream()
-                .map(p -> p.getAttribute(array, index))
-                .filter(s -> !(s == null || s.isEmpty()))
-                .collect(Collectors.joining(" "));
+        StringBuilder sb = new StringBuilder();
+        String loopDelimit = "";
+        for (ArrayElementAttributeProvider elem : arrayElementAttributeProviders) {
+            String tmp = elem.getAttribute(array, index);
+            if ((tmp != null) && !tmp.isEmpty()) {
+                sb.append(loopDelimit);
+                sb.append(tmp);
+                loopDelimit = " ";
+            }
+        }
+        String result = sb.toString();
         if (!result.isEmpty()) {
             return " " + result;
         } else {

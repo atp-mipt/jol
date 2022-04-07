@@ -26,7 +26,7 @@ package org.openjdk.jol.ljv;
 
 public final class Quote {
 
-    private Quote(){
+    private Quote() {
 
     }
 

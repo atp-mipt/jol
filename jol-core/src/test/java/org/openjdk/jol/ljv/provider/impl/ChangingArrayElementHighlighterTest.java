@@ -8,7 +8,7 @@ import static org.junit.Assume.assumeTrue;
 import static org.openjdk.jol.ljv.provider.impl.ChangingArrayElementHighlighter.HIGHLIGHT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ChangingArrayElementHighlighterTest implements VersionGuardedTest {
+public class ChangingArrayElementHighlighterTest extends VersionGuardedTest {
 
     ChangingArrayElementHighlighter provider = new ChangingArrayElementHighlighter();
 

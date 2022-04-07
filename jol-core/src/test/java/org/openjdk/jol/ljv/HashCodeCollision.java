@@ -1,15 +1,13 @@
 package org.openjdk.jol.ljv;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Michael Stummvoll
  * @author Ilya Selivanov
  */
 public class HashCodeCollision {
-
+/*
     public List<String> genCollisionString(Integer len) {
         String str = "ab";
         str += str.toUpperCase();
@@ -37,7 +35,22 @@ public class HashCodeCollision {
             hashMap.get(hash).add(permutation_el);
         });
 
-
-        return hashMap.values().stream().max(Comparator.comparingInt(List::size)).orElse(new ArrayList<>());
+        ArrayList<String> res = null;
+        for (List<String> value : hashMap.values()) {
+            if (value != null) {
+                if (res == null) {
+                    res = (ArrayList<String>) value;
+                    continue;
+                }
+                if (value.size() > res.size()) {
+                    res = (ArrayList<String>) value;
+                }
+            }
+        }
+        if (res == null){
+            res = new ArrayList<>();
+        }
+        return res;
     }
+ */
 }

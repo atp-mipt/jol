@@ -27,10 +27,12 @@ package org.openjdk.jol.ljv.provider;
 /**
  * Provides DOT attributes (color, font etc.) for a given object.
  */
-@FunctionalInterface
+
+//@FunctionalInterface
 public interface ObjectAttributesProvider {
     /**
      * Get map of attributes.
+     *
      * @param o Object
      * @return Map of attribute values
      */

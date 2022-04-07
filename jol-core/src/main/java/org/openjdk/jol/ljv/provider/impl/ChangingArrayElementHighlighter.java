@@ -44,14 +44,25 @@ public class ChangingArrayElementHighlighter implements ArrayElementAttributePro
         return newArray;
     }
 
+    private Object compIfAbsent(Object array) {
+        Object value = refCopy.get(array);
+        if (value == null) {
+            Object newValue = cloneArray(array);
+            refCopy.put(array, newValue);
+            value = newValue;
+        }
+        return value;
+    }
+
     @Override
     public String getAttribute(Object array, int index) {
         if (!array.getClass().isArray()) {
             throw new IllegalStateException();
         }
-        Object copy = refCopy.computeIfAbsent(array, this::cloneArray);
+
+        Object copy = compIfAbsent(array);
         Object newValue = Array.get(array, index);
-        if(!Objects.equals(newValue, Array.get(copy, index))){
+        if (!Objects.equals(newValue, Array.get(copy, index))) {
             Array.set(copy, index, newValue);
             return HIGHLIGHT;
         } else {

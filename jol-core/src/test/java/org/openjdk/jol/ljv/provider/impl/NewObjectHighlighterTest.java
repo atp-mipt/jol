@@ -7,7 +7,7 @@ import org.openjdk.jol.ljv.VersionGuardedTest;
 import static org.junit.Assume.assumeTrue;
 import static org.openjdk.jol.ljv.provider.impl.NewObjectHighlighter.HIGHLIGHT;
 
-public class NewObjectHighlighterTest implements VersionGuardedTest {
+public class NewObjectHighlighterTest extends VersionGuardedTest {
     @Test
     public void newObjectsAreHighlighted() {
         assumeTrue(is11());
