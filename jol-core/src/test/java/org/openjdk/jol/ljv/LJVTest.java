@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assumptions;
 import org.openjdk.jol.info.ClassLayout;
 import org.openjdk.jol.info.FieldLayout;
 import org.openjdk.jol.info.FieldData;
+import org.openjdk.jol.ljv.provider.ObjectAttributesProvider;
 import org.openjdk.jol.util.ObjectUtils;
 
 import java.lang.reflect.Field;
@@ -149,7 +150,7 @@ public class LJVTest extends VersionGuardedTest {
                 .addRoot(new Object()).addRoot(new Object()).addRoot(null).drawGraph();
         Approvals.verify(actualGraph);
     }
-/*
+
     @Test
     public void treeMap() {
         assumeTrue(is11());
@@ -169,15 +170,19 @@ public class LJVTest extends VersionGuardedTest {
                 .setIgnoreNullValuedFields(true)
                 .setTreatAsPrimitive(Integer.class)
                 .setTreatAsPrimitive(String.class)
-                .addObjectAttributesProvider(this::redBlack)
+                .addObjectAttributesProvider(new ObjectAttributesProvider() {
+                    @Override
+                    public String getAttribute(Object o) {
+                        return LJVTest.this.redBlack(o);
+                    }
+                })
                 .drawGraph(map);
         Approvals.verify(actualGraph);
     }
 
- */
 
     private String redBlack(Object o) {
-        Set<Field> colorFields = new HashSet<Field>();
+        Set<Field> colorFields = new HashSet<>();
         for (FieldLayout field : ClassLayout.parseClass(o.getClass()).fields()) {
             Field f = field.data().refField();
             if ("color".equals(f.getName()) && f.getType().equals(boolean.class)) {
@@ -229,7 +234,7 @@ public class LJVTest extends VersionGuardedTest {
                 .drawGraph(map);
         Approvals.verify(actual_graph);
     }
-/*
+
     @Test
     public void hashMapCollision2() {
         assumeTrue(is11());
@@ -247,7 +252,6 @@ public class LJVTest extends VersionGuardedTest {
 
         Approvals.verify(actual_graph);
     }
- */
 
 
     @Test

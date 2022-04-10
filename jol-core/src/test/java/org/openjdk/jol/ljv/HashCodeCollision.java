@@ -7,7 +7,7 @@ import java.util.*;
  * @author Ilya Selivanov
  */
 public class HashCodeCollision {
-/*
+
     public List<String> genCollisionString(Integer len) {
         String str = "ab";
         str += str.toUpperCase();
@@ -16,41 +16,57 @@ public class HashCodeCollision {
 
     public List<String> genCollisionString(Integer len, String alphabet) {
         Map<Integer, List<String>> hashMap = new HashMap<>();
-//        List<String> alphabet_list = alphabet.codePoints().mapToObj(c -> String.valueOf((char) c)).collect(Collectors.toUnmodifiableList());
-        List<String> alphabet_list = alphabet.codePoints().mapToObj(c -> String.valueOf((char) c))
-                .collect(Collectors.collectingAndThen(Collectors.toList(), x -> Collections.unmodifiableList(x)));
-        Stream<String> permutation = alphabet_list.stream();
-
-        for (int i = 0; i < len - 1; i++) {
-            permutation = permutation
-                    .flatMap(permutation_el -> alphabet_list.stream()
-                            .map(alphabet_x -> permutation_el + alphabet_x));
+        List<String> alphabet_list = new ArrayList<>();
+        boolean isPrevSurrogatePair = false;
+        for (int i = 1; i < alphabet.length(); ++i) {
+            if (Character.isSurrogatePair(alphabet.charAt(i - 1), alphabet.charAt(i)) == true) {
+                int code = Character.toCodePoint(alphabet.charAt(i - 1), alphabet.charAt(i));
+                alphabet_list.add(String.valueOf((char) code));
+                isPrevSurrogatePair = true;
+                i += 1;
+            } else {
+                alphabet_list.add(String.valueOf(alphabet.charAt(i - 1)));
+                isPrevSurrogatePair = false;
+            }
+        }
+        if (isPrevSurrogatePair == false) {
+            alphabet_list.add(String.valueOf(alphabet.charAt(alphabet.length() - 1)));
         }
 
-        permutation.forEach(permutation_el -> {
-            Integer hash = permutation_el.hashCode();
-            if (!hashMap.containsKey(hash)) {
-                hashMap.put(hash, new ArrayList<>());
+        StringBuilder[] permutation = new StringBuilder[(int) Math.pow(alphabet_list.size(), len)];
+        for (int idx = 0; idx < permutation.length; ++idx) {
+            permutation[idx] = new StringBuilder();
+            int idx_copy = idx;
+            for (int i = 0; i < len; ++i) {
+                permutation[idx].append(alphabet_list.get(idx_copy % alphabet_list.size()));
+                idx_copy /= alphabet_list.size();
             }
-            hashMap.get(hash).add(permutation_el);
-        });
-
-        ArrayList<String> res = null;
-        for (List<String> value : hashMap.values()) {
-            if (value != null) {
-                if (res == null) {
-                    res = (ArrayList<String>) value;
+            String permut_elem = permutation[idx].reverse().toString();
+            Integer hash = permut_elem.hashCode();
+            if (!hashMap.containsKey(hash)) {
+                hashMap.put(hash, new ArrayList<String>());
+            }
+            hashMap.get(hash).add(permut_elem);
+        }
+        int max_size = 0;
+        List<String> answer = null;
+        for (List<String> elem : hashMap.values()) {
+            if (elem != null) {
+                if (answer == null) {
+                    max_size = elem.size();
+                    answer = elem;
                     continue;
                 }
-                if (value.size() > res.size()) {
-                    res = (ArrayList<String>) value;
+                if (elem.size() > max_size) {
+                    max_size = elem.size();
+                    answer = elem;
                 }
             }
         }
-        if (res == null){
-            res = new ArrayList<>();
+        if (answer == null) {
+            answer = new ArrayList<>();
         }
-        return res;
+        return answer;
     }
- */
+
 }
