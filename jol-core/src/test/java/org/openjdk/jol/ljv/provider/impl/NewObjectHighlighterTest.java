@@ -1,7 +1,7 @@
 package org.openjdk.jol.ljv.provider.impl;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.Assert;
+import org.junit.Test;
 import org.openjdk.jol.ljv.VersionGuardedTest;
 
 import static org.junit.Assume.assumeTrue;
@@ -14,8 +14,8 @@ public class NewObjectHighlighterTest extends VersionGuardedTest {
         Object o1 = new Object();
         Object o2 = new Object();
         NewObjectHighlighter highlighter = new NewObjectHighlighter();
-        Assertions.assertEquals(HIGHLIGHT, highlighter.getAttribute(o1));
-        Assertions.assertEquals(HIGHLIGHT, highlighter.getAttribute(o2));
-        Assertions.assertEquals("", highlighter.getAttribute(o1));
+        Assert.assertEquals(HIGHLIGHT, highlighter.getAttribute(o1));
+        Assert.assertEquals(HIGHLIGHT, highlighter.getAttribute(o2));
+        Assert.assertEquals("", highlighter.getAttribute(o1));
     }
 }

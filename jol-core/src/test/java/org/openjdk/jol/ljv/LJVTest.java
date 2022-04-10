@@ -2,10 +2,8 @@ package org.openjdk.jol.ljv;
 
 import org.junit.Test;
 import org.approvaltests.Approvals;
-import org.junit.jupiter.api.Assumptions;
 import org.openjdk.jol.info.ClassLayout;
 import org.openjdk.jol.info.FieldLayout;
-import org.openjdk.jol.info.FieldData;
 import org.openjdk.jol.ljv.provider.ObjectAttributesProvider;
 import org.openjdk.jol.util.ObjectUtils;
 
