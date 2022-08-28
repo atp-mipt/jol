@@ -260,7 +260,7 @@ public class LJVTest extends VersionGuardedTest {
     @Test
     public void hashMapCollision2() {
         assumeTrue(is11());
-        List<String> collisionString = new HashCodeCollision().genCollisionString(3);
+        List<String> collisionString = new HashCodeCollision().genCollisionString(8);
         HashMap<String, Integer> map = new HashMap<>();
 
         for (int i = 0; i < collisionString.size(); i++) {
