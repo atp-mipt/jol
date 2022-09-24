@@ -24,36 +24,45 @@
  */
 package org.openjdk.jol.ljv;
 
+import org.junit.Test;
+
 import java.util.*;
 
+import static org.junit.Assert.assertEquals;
+
+
 /**
- * @author Victor Petrosyan
- * @author Ilya Selivanov
+ * @author Ivan Ponomarev
  */
 public class HashCodeCollision {
 
-    public List<String> genCollisionString(Integer amountOfCollisions){
-        StringBuilder sBuilder = new StringBuilder();
-        for(int i = 0; i < amountOfCollisions + 1; ++i){
-            sBuilder.append("MIPT");
+    public List<String> genCollisionString(Integer amount) {
+        List<String> result = new ArrayList<>();
+        for (int i = 0; i < amount; i++) {
+            StringBuilder val = new StringBuilder();
+            int mask = 1;
+            do {
+                val.append((i & mask) > 0 ? "BB" : "Aa");
+                mask *= 2;
+            } while (mask < amount);
+            result.add(val.toString());
         }
-        sBuilder.trimToSize();
-
-        ArrayList<String> collisions = new ArrayList<>();
-        for(int i = 0; i < sBuilder.capacity(); i += 4){
-            int randomNum = 1;
-            if( i % 8 == 0){
-                randomNum = 2;
-            }
-            char current = sBuilder.charAt(i);
-            char next = sBuilder.charAt(i + 1);
-
-            sBuilder.setCharAt(i, (char) (current + randomNum));
-            sBuilder.setCharAt(i + 1, (char) (next - (31 * randomNum)));
-            collisions.add(sBuilder.toString());
-        }
-        return collisions;
+        return result;
     }
 
-
+    @Test
+    public void testCollisions() {
+        for (int number = 1; number < 101; number++) {
+            List<String> strings = genCollisionString(number);
+            Set<String> deduplicated = new HashSet<>(strings);
+            //All strings are unique
+            assertEquals(number, deduplicated.size());
+            int hashCode = strings.get(0).hashCode();
+            for (int i = 1; i < strings.size(); i++) {
+                //All strings have the same hash code
+                assertEquals(hashCode, strings.get(i).hashCode());
+            }
+        }
+    }
 }
+
